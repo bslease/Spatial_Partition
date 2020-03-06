@@ -484,6 +484,8 @@ MonoBehaviour:
     type: 2}
   enemyParent: {fileID: 2076254176}
   friendlyParent: {fileID: 636697543}
+  numberOfSoldiers: 100
+  useSpatialParition: 0
 --- !u!4 &2076423411
 Transform:
   m_ObjectHideFlags: 0

@@ -27,7 +27,8 @@ namespace SpatialPartitionPattern
         int cellSize = 10;
 
         // Number of soldiers on each team
-        int numberOfSoldiers = 100;
+        public int numberOfSoldiers = 100;
+        public bool useSpatialParition = false;
 
         // The spatial partition grid
         Grid grid;
@@ -55,6 +56,8 @@ namespace SpatialPartitionPattern
         // Update is called once per frame
         void Update()
         {
+            float startTime = Time.realtimeSinceStartup;
+
             // move the enemies
             for (int i=0; i < enemySoldiers.Count; i++)
             {
@@ -69,9 +72,17 @@ namespace SpatialPartitionPattern
 
             // reset the list with the closest enemies
             closestEnemies.Clear();
+            Soldier closestEnemy;
             for (int i=0; i < friendlySoldiers.Count; i++)
             {
-                Soldier closestEnemy = grid.FindClosestEnemy(friendlySoldiers[i]);
+                if (useSpatialParition)
+                {
+                    closestEnemy = grid.FindClosestEnemy(friendlySoldiers[i]);
+                }
+                else
+                {
+                    closestEnemy = FindClosestEnemySlow(friendlySoldiers[i]);
+                }
                 if (closestEnemy != null)
                 {
                     closestEnemy.soldierMeshRenderer.material = closestEnemyMaterial;
@@ -79,6 +90,28 @@ namespace SpatialPartitionPattern
                     friendlySoldiers[i].Move(closestEnemy);
                 }
             }
+
+            float elapsedTime = (Time.realtimeSinceStartup - startTime) * 1000f;
+            Debug.Log(elapsedTime + "ms");
+        }
+
+        // Find the closest enemy - slow version
+        Soldier FindClosestEnemySlow(Soldier soldier)
+        {
+            Soldier closestEnemy = null;
+            float bestDistSqr = Mathf.Infinity;
+
+            // loop through all enemies
+            for (int i=0; i < enemySoldiers.Count; i++)
+            {
+                float distSqr = (soldier.soldierTrans.position - enemySoldiers[i].soldierTrans.position).sqrMagnitude;
+                if (distSqr < bestDistSqr)
+                {
+                    bestDistSqr = distSqr;
+                    closestEnemy = enemySoldiers[i];
+                }
+            }
+            return closestEnemy;
         }
     }
 }
