@@ -42,7 +42,7 @@ namespace SpatialPartitionPattern
             }
         }
 
-        // Get the closest enemy from the grid
+        // TOUR STOP 04 - Get the closest enemy from the grid
         public Soldier FindClosestEnemy(Soldier friendlySoldier)
         {
             // Determine which cell the friendly soldier is in

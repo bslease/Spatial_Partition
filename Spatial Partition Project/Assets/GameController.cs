@@ -56,6 +56,7 @@ namespace SpatialPartitionPattern
         // Update is called once per frame
         void Update()
         {
+            // TOUR STOP 01 - measuring performance, easy mode
             float startTime = Time.realtimeSinceStartup;
 
             // move the enemies
@@ -75,6 +76,7 @@ namespace SpatialPartitionPattern
             Soldier closestEnemy;
             for (int i=0; i < friendlySoldiers.Count; i++)
             {
+                // TOUR STOP 02 - toggle spatial partition optimization
                 if (useSpatialParition)
                 {
                     closestEnemy = grid.FindClosestEnemy(friendlySoldiers[i]);
@@ -95,7 +97,7 @@ namespace SpatialPartitionPattern
             Debug.Log(elapsedTime + "ms");
         }
 
-        // Find the closest enemy - slow version
+        // TOUR STOP 03 - Find the closest enemy, slow version
         Soldier FindClosestEnemySlow(Soldier soldier)
         {
             Soldier closestEnemy = null;

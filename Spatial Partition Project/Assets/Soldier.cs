@@ -11,7 +11,8 @@ namespace SpatialPartitionPattern
         public Transform soldierTrans;
         protected float walkSpeed;
 
-        // connect soldiers in a linked list so we can easily partition them in space
+        // TOUR STOP 05
+        // connect soldiers in a doubly linked list so we can easily partition them in space
         public Soldier previousSoldier;
         public Soldier nextSoldier;
 
